@@ -1,3 +1,6 @@
+# lagomorph-Modified
+This is the lagomorph library modified for pytorch>=1.1.0.
+
 # lagomorph: Large Scale Computational Anatomy in PyTorch
 
 [![PyPI version](https://badge.fury.io/py/lagomorph.svg)](https://badge.fury.io/py/lagomorph)
