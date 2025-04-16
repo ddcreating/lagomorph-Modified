@@ -18,10 +18,10 @@ void affine_interp_2d(
     auto nc = I_.size(1);
     auto nx = I_.size(2);
     auto ny = I_.size(3);
-    auto out = out_.data<Real>();
-    auto I = I_.data<Real>();
-    auto A = A_.data<Real>();
-    auto T = T_.data<Real>();
+    auto out = out_.data_ptr<Real>();
+    auto I = I_.data_ptr<Real>();
+    auto A = A_.data_ptr<Real>();
+    auto T = T_.data_ptr<Real>();
     const int nxy = nx*ny;
     const Real* In = I; // pointer to current vector field v
     Real* outn = out; // pointer to current vector field v
@@ -72,10 +72,10 @@ void affine_interp_3d(
     auto nx = I_.size(2);
     auto ny = I_.size(3);
     auto nz = I_.size(4);
-    auto out = out_.data<Real>();
-    auto I = I_.data<Real>();
-    auto A = A_.data<Real>();
-    auto T = T_.data<Real>();
+    auto out = out_.data_ptr<Real>();
+    auto I = I_.data_ptr<Real>();
+    auto A = A_.data_ptr<Real>();
+    auto T = T_.data_ptr<Real>();
     const int nxyz = nx*ny*nz;
     const Real* In = I; // pointer to current vector field v
     Real* outn = out; // pointer to current vector field v
@@ -142,9 +142,9 @@ at::Tensor affine_interp_cpu_forward(
     at::Tensor Itx;
 
     if (d == 2) {
-        Itx = at::zeros({A.size(0), I.size(1), I.size(2), I.size(3)}, I.type());
+        Itx = at::zeros({A.size(0), I.size(1), I.size(2), I.size(3)}, I.scalar_type());
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
-            AT_DISPATCH_FLOATING_TYPES(I.type(), "affine_interp_cpu_forward", ([&] {
+            AT_DISPATCH_FLOATING_TYPES(I.scalar_type(), "affine_interp_cpu_forward", ([&] {
             affine_interp_2d<scalar_t, broadcastI>(
                 Itx,
                 I,
@@ -153,9 +153,9 @@ at::Tensor affine_interp_cpu_forward(
             }));
         }));
     } else {
-        Itx = at::zeros({A.size(0), I.size(1), I.size(2), I.size(3), I.size(4)}, I.type());
+        Itx = at::zeros({A.size(0), I.size(1), I.size(2), I.size(3), I.size(4)}, I.scalar_type());
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
-            AT_DISPATCH_FLOATING_TYPES(I.type(), "affine_interp_cpu_forward", ([&] {
+            AT_DISPATCH_FLOATING_TYPES(I.scalar_type(), "affine_interp_cpu_forward", ([&] {
             affine_interp_3d<scalar_t, broadcastI>(
                 Itx,
                 I,

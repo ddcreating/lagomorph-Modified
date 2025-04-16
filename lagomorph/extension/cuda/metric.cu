@@ -326,11 +326,11 @@ void fluid_operator_cuda(
         LAGOMORPH_DISPATCH_BOOL(inverse, do_inverse, ([&] {
             AT_DISPATCH_FLOATING_TYPES(Fmv.type(), "fluid_operator_cuda", ([&] {
                 fluid_kernel_2d<scalar_t, do_inverse><<<blocks, threads>>>(
-                    Fmv.data<scalar_t>(),
-                    cosluts[0].data<scalar_t>(),
-                    sinluts[0].data<scalar_t>(),
-                    cosluts[1].data<scalar_t>(),
-                    sinluts[1].data<scalar_t>(),
+                    Fmv.data_ptr<scalar_t>(),
+                    cosluts[0].data_ptr<scalar_t>(),
+                    sinluts[0].data_ptr<scalar_t>(),
+                    cosluts[1].data_ptr<scalar_t>(),
+                    sinluts[1].data_ptr<scalar_t>(),
                     alpha, beta, gamma,
                     Fmv.size(0), Fmv.size(2), Fmv.size(3));
                 }));
@@ -339,13 +339,13 @@ void fluid_operator_cuda(
         LAGOMORPH_DISPATCH_BOOL(inverse, do_inverse, ([&] {
             AT_DISPATCH_FLOATING_TYPES(Fmv.type(), "fluid_operator_cuda", ([&] {
                 fluid_kernel_3d<scalar_t, do_inverse><<<blocks, threads>>>(
-                    Fmv.data<scalar_t>(),
-                    cosluts[0].data<scalar_t>(),
-                    sinluts[0].data<scalar_t>(),
-                    cosluts[1].data<scalar_t>(),
-                    sinluts[1].data<scalar_t>(),
-                    cosluts[2].data<scalar_t>(),
-                    sinluts[2].data<scalar_t>(),
+                    Fmv.data_ptr<scalar_t>(),
+                    cosluts[0].data_ptr<scalar_t>(),
+                    sinluts[0].data_ptr<scalar_t>(),
+                    cosluts[1].data_ptr<scalar_t>(),
+                    sinluts[1].data_ptr<scalar_t>(),
+                    cosluts[2].data_ptr<scalar_t>(),
+                    sinluts[2].data_ptr<scalar_t>(),
                     alpha, beta, gamma,
                     Fmv.size(0), Fmv.size(2), Fmv.size(3), Fmv.size(4));
                 }));

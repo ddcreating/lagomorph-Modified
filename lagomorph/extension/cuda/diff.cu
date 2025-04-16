@@ -152,9 +152,9 @@ at::Tensor jacobian_times_vectorfield_forward(
             LAGOMORPH_DISPATCH_BOOL(displacement, disp, ([&] {
                 AT_DISPATCH_FLOATING_TYPES(g.type(), "jacobian_times_vectorfield_forward", ([&] {
                 jacobian_times_vectorfield_forward_kernel_2d<scalar_t, disp, trans, DEFAULT_BACKGROUND_STRATEGY><<<blocks, threads>>>(
-                    out.data<scalar_t>(),
-                    g.data<scalar_t>(),
-                    v.data<scalar_t>(),
+                    out.data_ptr<scalar_t>(),
+                    g.data_ptr<scalar_t>(),
+                    v.data_ptr<scalar_t>(),
                     out.size(0),
                     out.size(1),
                     out.size(2),
@@ -167,9 +167,9 @@ at::Tensor jacobian_times_vectorfield_forward(
             LAGOMORPH_DISPATCH_BOOL(displacement, disp, ([&] {
                 AT_DISPATCH_FLOATING_TYPES(g.type(), "jacobian_times_vectorfield_forward", ([&] {
                 jacobian_times_vectorfield_forward_kernel_3d<scalar_t, disp, trans, DEFAULT_BACKGROUND_STRATEGY><<<blocks, threads>>>(
-                    out.data<scalar_t>(),
-                    g.data<scalar_t>(),
-                    v.data<scalar_t>(),
+                    out.data_ptr<scalar_t>(),
+                    g.data_ptr<scalar_t>(),
+                    v.data_ptr<scalar_t>(),
                     out.size(0),
                     out.size(1),
                     out.size(2),
@@ -503,11 +503,11 @@ std::vector<at::Tensor> jacobian_times_vectorfield_backward(
             LAGOMORPH_DISPATCH_BOOL(displacement, disp, ([&] {
                 AT_DISPATCH_FLOATING_TYPES(v.type(), "jacobian_times_vectorfield_backward", ([&] {
                 jacobian_times_vectorfield_backward_kernel_2d<scalar_t, disp, trans, DEFAULT_BACKGROUND_STRATEGY, true, true><<<blocks, threads>>>(
-                    d_v.data<scalar_t>(),
-                    d_w.data<scalar_t>(),
-                    grad_out.data<scalar_t>(),
-                    v.data<scalar_t>(),
-                    w.data<scalar_t>(),
+                    d_v.data_ptr<scalar_t>(),
+                    d_w.data_ptr<scalar_t>(),
+                    grad_out.data_ptr<scalar_t>(),
+                    v.data_ptr<scalar_t>(),
+                    w.data_ptr<scalar_t>(),
                     v.size(0),
                     v.size(1),
                     v.size(2),
@@ -520,11 +520,11 @@ std::vector<at::Tensor> jacobian_times_vectorfield_backward(
             LAGOMORPH_DISPATCH_BOOL(displacement, disp, ([&] {
                 AT_DISPATCH_FLOATING_TYPES(v.type(), "jacobian_times_vectorfield_backward", ([&] {
                 jacobian_times_vectorfield_backward_kernel_3d<scalar_t, disp, trans, DEFAULT_BACKGROUND_STRATEGY, true, true><<<blocks, threads>>>(
-                    d_v.data<scalar_t>(),
-                    d_w.data<scalar_t>(),
-                    grad_out.data<scalar_t>(),
-                    v.data<scalar_t>(),
-                    w.data<scalar_t>(),
+                    d_v.data_ptr<scalar_t>(),
+                    d_w.data_ptr<scalar_t>(),
+                    grad_out.data_ptr<scalar_t>(),
+                    v.data_ptr<scalar_t>(),
+                    w.data_ptr<scalar_t>(),
                     v.size(0),
                     v.size(1),
                     v.size(2),
@@ -645,9 +645,9 @@ at::Tensor jacobian_times_vectorfield_adjoint_forward(
     if (d == 2) {
         AT_DISPATCH_FLOATING_TYPES(g.type(), "jacobian_times_vectorfield_adjoint_forward", ([&] {
         jacobian_times_vectorfield_adjoint_forward_kernel_2d<scalar_t, BACKGROUND_STRATEGY_CLAMP><<<blocks, threads>>>(
-            out.data<scalar_t>(),
-            g.data<scalar_t>(),
-            v.data<scalar_t>(),
+            out.data_ptr<scalar_t>(),
+            g.data_ptr<scalar_t>(),
+            v.data_ptr<scalar_t>(),
             out.size(0),
             out.size(1),
             out.size(2),
@@ -656,9 +656,9 @@ at::Tensor jacobian_times_vectorfield_adjoint_forward(
     } else {
         AT_DISPATCH_FLOATING_TYPES(g.type(), "jacobian_times_vectorfield_adjoint_forward", ([&] {
         jacobian_times_vectorfield_adjoint_forward_kernel_3d<scalar_t, BACKGROUND_STRATEGY_CLAMP><<<blocks, threads>>>(
-            out.data<scalar_t>(),
-            g.data<scalar_t>(),
-            v.data<scalar_t>(),
+            out.data_ptr<scalar_t>(),
+            g.data_ptr<scalar_t>(),
+            v.data_ptr<scalar_t>(),
             out.size(0),
             out.size(1),
             out.size(2),
@@ -804,11 +804,11 @@ std::vector<at::Tensor> jacobian_times_vectorfield_adjoint_backward(
     if (d == 2) {
         AT_DISPATCH_FLOATING_TYPES(v.type(), "jacobian_times_vectorfield_adjoint_backward", ([&] {
         jacobian_times_vectorfield_adjoint_backward_kernel_2d<scalar_t, DEFAULT_BACKGROUND_STRATEGY, true, true><<<blocks, threads>>>(
-            d_v.data<scalar_t>(),
-            d_w.data<scalar_t>(),
-            grad_out.data<scalar_t>(),
-            v.data<scalar_t>(),
-            w.data<scalar_t>(),
+            d_v.data_ptr<scalar_t>(),
+            d_w.data_ptr<scalar_t>(),
+            grad_out.data_ptr<scalar_t>(),
+            v.data_ptr<scalar_t>(),
+            w.data_ptr<scalar_t>(),
             v.size(0),
             v.size(1),
             v.size(2),
@@ -817,11 +817,11 @@ std::vector<at::Tensor> jacobian_times_vectorfield_adjoint_backward(
     } else {
         AT_DISPATCH_FLOATING_TYPES(v.type(), "jacobian_times_vectorfield_adjoint_backward", ([&] {
         jacobian_times_vectorfield_adjoint_backward_kernel_3d<scalar_t, DEFAULT_BACKGROUND_STRATEGY, true, true><<<blocks, threads>>>(
-            d_v.data<scalar_t>(),
-            d_w.data<scalar_t>(),
-            grad_out.data<scalar_t>(),
-            v.data<scalar_t>(),
-            w.data<scalar_t>(),
+            d_v.data_ptr<scalar_t>(),
+            d_w.data_ptr<scalar_t>(),
+            grad_out.data_ptr<scalar_t>(),
+            v.data_ptr<scalar_t>(),
+            w.data_ptr<scalar_t>(),
             v.size(0),
             v.size(1),
             v.size(2),

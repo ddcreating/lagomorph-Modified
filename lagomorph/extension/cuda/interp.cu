@@ -97,9 +97,9 @@ at::Tensor interp_cuda_forward(
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
             AT_DISPATCH_FLOATING_TYPES(Iv.type(), "interp_cuda_forward", ([&] {
             interp_kernel_2d<scalar_t, broadcastI><<<blocks, threads>>>(
-                out.data<scalar_t>(),
-                Iv.data<scalar_t>(),
-                u.data<scalar_t>(),
+                out.data_ptr<scalar_t>(),
+                Iv.data_ptr<scalar_t>(),
+                u.data_ptr<scalar_t>(),
                 dt,
                 batch_size,
                 Iv.size(1),
@@ -112,9 +112,9 @@ at::Tensor interp_cuda_forward(
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
             AT_DISPATCH_FLOATING_TYPES(Iv.type(), "interp_cuda_forward", ([&] {
             interp_kernel_3d<scalar_t, broadcastI><<<blocks, threads>>>(
-                out.data<scalar_t>(),
-                Iv.data<scalar_t>(),
-                u.data<scalar_t>(),
+                out.data_ptr<scalar_t>(),
+                Iv.data_ptr<scalar_t>(),
+                u.data_ptr<scalar_t>(),
                 dt,
                 batch_size,
                 Iv.size(1),
@@ -270,11 +270,11 @@ std::vector<at::Tensor> interp_cuda_backward(
                     AT_DISPATCH_FLOATING_TYPES(Iv.type(), "interp_cuda_backward", ([&] {
                     interp_kernel_backward_2d<scalar_t, bcastI, needI,
                             needu><<<blocks, threads>>>(
-                        d_I.data<scalar_t>(),
-                        d_u.data<scalar_t>(),
-                        grad_out.data<scalar_t>(),
-                        Iv.data<scalar_t>(),
-                        u.data<scalar_t>(),
+                        d_I.data_ptr<scalar_t>(),
+                        d_u.data_ptr<scalar_t>(),
+                        grad_out.data_ptr<scalar_t>(),
+                        Iv.data_ptr<scalar_t>(),
+                        u.data_ptr<scalar_t>(),
                         dt,
                         batch_size,
                         Iv.size(1),
@@ -291,11 +291,11 @@ std::vector<at::Tensor> interp_cuda_backward(
                     AT_DISPATCH_FLOATING_TYPES(Iv.type(), "interp_cuda_backward", ([&] {
                     interp_kernel_backward_3d<scalar_t, bcastI, needI,
                             needu><<<blocks, threads>>>(
-                        d_I.data<scalar_t>(),
-                        d_u.data<scalar_t>(),
-                        grad_out.data<scalar_t>(),
-                        Iv.data<scalar_t>(),
-                        u.data<scalar_t>(),
+                        d_I.data_ptr<scalar_t>(),
+                        d_u.data_ptr<scalar_t>(),
+                        grad_out.data_ptr<scalar_t>(),
+                        Iv.data_ptr<scalar_t>(),
+                        u.data_ptr<scalar_t>(),
                         dt,
                         batch_size,
                         Iv.size(1),
@@ -365,9 +365,9 @@ at::Tensor interp_hessian_diagonal_image(
     LAGOMORPH_DISPATCH_BOOL(broadcast_I, bcastI, ([&] {
         AT_DISPATCH_FLOATING_TYPES(Iv.type(), "interp_hessian_diagonal_image", ([&] {
         interp_hessian_diagonal_image_kernel_2d<scalar_t, bcastI, DEFAULT_BACKGROUND_STRATEGY><<<blocks, threads>>>(
-            out.data<scalar_t>(),
-            Iv.data<scalar_t>(),
-            u.data<scalar_t>(),
+            out.data_ptr<scalar_t>(),
+            Iv.data_ptr<scalar_t>(),
+            u.data_ptr<scalar_t>(),
             dt,
             batch_size,
             Iv.size(1),

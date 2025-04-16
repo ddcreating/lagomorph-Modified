@@ -28,6 +28,9 @@ setup(
                 "lagomorph/extension/extension.cpp",
             ],
             include_dirs=[os.path.abspath("lagomorph/extension/include")],
+            extra_compile_args={
+             "cxx": ["-O2"],
+             "nvcc": ["-O2", "-allow-unsupported-compiler"]}
         )
     ],
 )

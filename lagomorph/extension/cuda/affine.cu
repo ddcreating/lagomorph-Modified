@@ -132,10 +132,10 @@ at::Tensor affine_interp_cuda_forward(
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
             AT_DISPATCH_FLOATING_TYPES(I.type(), "affine_interp_cuda_forward", ([&] {
             affine_interp_kernel_2d<scalar_t, broadcastI><<<blocks, threads>>>(
-                Itx.data<scalar_t>(),
-                I.data<scalar_t>(),
-                A.data<scalar_t>(),
-                T.data<scalar_t>(),
+                Itx.data_ptr<scalar_t>(),
+                I.data_ptr<scalar_t>(),
+                A.data_ptr<scalar_t>(),
+                T.data_ptr<scalar_t>(),
                 NULL,
                 NULL,
                 A.size(0),
@@ -149,10 +149,10 @@ at::Tensor affine_interp_cuda_forward(
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
             AT_DISPATCH_FLOATING_TYPES(I.type(), "affine_interp_cuda_forward", ([&] {
             affine_interp_kernel_3d<scalar_t, broadcastI><<<blocks, threads>>>(
-                Itx.data<scalar_t>(),
-                I.data<scalar_t>(),
-                A.data<scalar_t>(),
-                T.data<scalar_t>(),
+                Itx.data_ptr<scalar_t>(),
+                I.data_ptr<scalar_t>(),
+                A.data_ptr<scalar_t>(),
+                T.data_ptr<scalar_t>(),
                 NULL,
                 NULL,
                 A.size(0),
@@ -565,13 +565,13 @@ std::vector<at::Tensor> affine_interp_cuda_backward(
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
             AT_DISPATCH_FLOATING_TYPES(I.type(), "affine_interp_cuda_backward", ([&] {
             affine_interp_kernel_backward_2d<scalar_t, broadcastI, needI, needA, needT><<<blocks, threads>>>(
-                d_I.data<scalar_t>(),
-                d_A.data<scalar_t>(),
-                d_T.data<scalar_t>(),
-                grad_out.data<scalar_t>(),
-                I.data<scalar_t>(),
-                A.data<scalar_t>(),
-                T.data<scalar_t>(),
+                d_I.data_ptr<scalar_t>(),
+                d_A.data_ptr<scalar_t>(),
+                d_T.data_ptr<scalar_t>(),
+                grad_out.data_ptr<scalar_t>(),
+                I.data_ptr<scalar_t>(),
+                A.data_ptr<scalar_t>(),
+                T.data_ptr<scalar_t>(),
                 NULL,
                 NULL,
                 grad_out.size(0),
@@ -587,13 +587,13 @@ std::vector<at::Tensor> affine_interp_cuda_backward(
         LAGOMORPH_DISPATCH_BOOL(broadcast_I, broadcastI, ([&] {
             AT_DISPATCH_FLOATING_TYPES(I.type(), "affine_interp_cuda_backward", ([&] {
             affine_interp_kernel_backward_3d<scalar_t, broadcastI, needI, needA, needT><<<blocks, threads>>>(
-                d_I.data<scalar_t>(),
-                d_A.data<scalar_t>(),
-                d_T.data<scalar_t>(),
-                grad_out.data<scalar_t>(),
-                I.data<scalar_t>(),
-                A.data<scalar_t>(),
-                T.data<scalar_t>(),
+                d_I.data_ptr<scalar_t>(),
+                d_A.data_ptr<scalar_t>(),
+                d_T.data_ptr<scalar_t>(),
+                grad_out.data_ptr<scalar_t>(),
+                I.data_ptr<scalar_t>(),
+                A.data_ptr<scalar_t>(),
+                T.data_ptr<scalar_t>(),
                 NULL,
                 NULL,
                 grad_out.size(0),
@@ -702,8 +702,8 @@ at::Tensor regrid_forward(
         Itx = at::zeros({I.size(0), I.size(1), shape[0], shape[1]}, I.type());
         AT_DISPATCH_FLOATING_TYPES(I.type(), "regrid_forward", ([&] {
         regrid_forward_kernel_2d<scalar_t><<<blocks, threads>>>(
-            Itx.data<scalar_t>(),
-            I.data<scalar_t>(),
+            Itx.data_ptr<scalar_t>(),
+            I.data_ptr<scalar_t>(),
             shape[0], shape[1],
             origin[0], origin[1],
             spacing[0], spacing[1],
@@ -716,8 +716,8 @@ at::Tensor regrid_forward(
         Itx = at::zeros({I.size(0), I.size(1), shape[0], shape[1], shape[2]}, I.type());
         AT_DISPATCH_FLOATING_TYPES(I.type(), "regrid_forward", ([&] {
         regrid_forward_kernel_3d<scalar_t><<<blocks, threads>>>(
-            Itx.data<scalar_t>(),
-            I.data<scalar_t>(),
+            Itx.data_ptr<scalar_t>(),
+            I.data_ptr<scalar_t>(),
             shape[0], shape[1], shape[2],
             origin[0], origin[1], origin[2],
             spacing[0], spacing[1], spacing[2],
@@ -823,8 +823,8 @@ at::Tensor regrid_backward(
         d_I = at::zeros({grad_out.size(0), grad_out.size(1), inshape[0], inshape[1]}, grad_out.type());
         AT_DISPATCH_FLOATING_TYPES(grad_out.type(), "regrid_backward", ([&] {
         regrid_backward_kernel_2d<scalar_t><<<blocks, threads>>>(
-            d_I.data<scalar_t>(),
-            grad_out.data<scalar_t>(),
+            d_I.data_ptr<scalar_t>(),
+            grad_out.data_ptr<scalar_t>(),
             shape[0], shape[1],
             origin[0], origin[1],
             spacing[0], spacing[1],
@@ -837,8 +837,8 @@ at::Tensor regrid_backward(
         d_I = at::zeros({grad_out.size(0), grad_out.size(1), inshape[0], inshape[1], inshape[2]}, grad_out.type());
         AT_DISPATCH_FLOATING_TYPES(grad_out.type(), "regrid_backward", ([&] {
         regrid_backward_kernel_3d<scalar_t><<<blocks, threads>>>(
-            d_I.data<scalar_t>(),
-            grad_out.data<scalar_t>(),
+            d_I.data_ptr<scalar_t>(),
+            grad_out.data_ptr<scalar_t>(),
             shape[0], shape[1], shape[2],
             origin[0], origin[1], origin[2],
             spacing[0], spacing[1], spacing[2],
