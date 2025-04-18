@@ -1,54 +1,38 @@
 # lagomorph-Modified
-This is the lagomorph library modified for pytorch>=1.1.0.
 
-# lagomorph: Large Scale Computational Anatomy in PyTorch
+This repository contains the modified **Lagomorph** library, updated for compatibility with **PyTorch >= 1.1.0** and **CUDA**.
 
-Lagomorph aims to provide tools for [computational
-anatomy](https://en.wikipedia.org/wiki/Computational_anatomy) in the context of
-the deep learning framework PyTorch, which will enable easier integration of
-image registration methodologies with deep learning.
-
-This project follows past LDDMM implementations including CompOnc, AtlasWerks, and [PyCA](https://bitbucket.org/scicompanat/pyca). Lagomorph makes those methods more amenable to use with [PyTorch](https://pytorch.org).
-Our goal is to enable large-scale 2D
-and 3D deformable image registration, atlas building, etc. to be used seamlessly with deep neural networks implemented in PyTorch. As such, we follow PyTorch conventions, storing tensors in NCDHW format, and using built-in PyTorch functionality where possible.
-
-**NOTE:** Currently, only computation on CUDA GPUs is supported, but CPU and AMD GPU support is planned.
+Link to the original version: [jacobhinkle/lagomorph](https://github.com/jacobhinkle/lagomorph/tree/master)
 
 # Installation
 
-To install, simply run the following:
+1. Clone or download the modified Lagomorph repository.
+
+2. Open a terminal and navigate to the folder containing `setup.py`.
+
+3. Run the following command to install the library in "editable" mode:
 
 ```
-pip install lagomorph
+pip install -e . --no-build-isolation
+
 ```
 
 This will pull in the following prerequisites:
 
-- PyTorch >= 0.4.0
-- numpy
+- **PyTorch >= 1.1.0**
+- **NumPy < 2.0**
 
-Note that often it is necessary to install `numpy` manually first using `pip
-install numpy` due to weirdness in numpy's packaging.
+- **PyTorch:** Ensure you have a compatible version of **PyTorch >= 1.1.0** installed. You can install **PyTorch 2.1.1+cu121** with:  pip install torch==2.1.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+- **numpy:** Note that often it is necessary to install `numpy` manually first using `pip install numpy` due to weirdness in numpy's packaging.
+- - **CUDA:** Ensure your environment has a compatible **CUDA** version. In this repository, **CUDA 12.8** is used with **PyTorch 2.1.1+cu121**. However, other versions of CUDA that are compatible with your PyTorch version should work as well.
 
-To run the test suite for lagomorph, execute the following command from the
-current directory in this repository:
+To run the test suite for lagomorph, execute the following command from the current directory in this repository:
 
 ```
 python setup.py test
+
 ```
 
-# Design Notes
+## Notes
 
-In PyCA, an `Image3D` was the basic type, which is convenient when you have many
-images all with different coordinate grids. In `lagomorph`, all operations are
-assumed to be happening in batches. As a result, you likely will need to
-standardize your images onto a common grid before using. For simplicity, at this
-time lagomorph also doesn't support irregular grids. This means the fundamental
-type of an image is simply a `torch.Tensor` of the appropriate dimension in
-NCWH(D) order, where a scalar image is simply a single channel image and a
-vector field is a `dim`-channel image. We ignore positioning with origin and
-voxel spacing in general unless it's needed for an operation.
-
-# Related projects
-
-Lagomorph was heavily influenced by the [PyCA](https://bitbucket) project.
+- The installation is tested with **PyTorch 2.1.1+cu121** and **CUDA 12.8**, but other compatible versions of PyTorch and CUDA should work.
