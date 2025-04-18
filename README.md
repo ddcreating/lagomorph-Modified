@@ -23,7 +23,9 @@ This will pull in the following prerequisites:
 - **NumPy < 2.0**
 
 **PyTorch:** Ensure you have a compatible version of **PyTorch >= 1.1.0** installed. You can install **PyTorch 2.1.1+cu121** with:  `pip install torch==2.1.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121`
+
 **numpy:** Note that often it is necessary to install `numpy` manually first using `pip install numpy` due to weirdness in numpy's packaging.
+
 **CUDA:** Ensure your environment has a compatible **CUDA** version. In this repository, **CUDA 12.8** is used with **PyTorch 2.1.1+cu121**. However, other versions of CUDA that are compatible with your PyTorch version should work as well.
 
 To run the test suite for lagomorph, execute the following command from the current directory in this repository:
